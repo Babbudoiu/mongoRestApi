@@ -25,7 +25,8 @@ exports.findUser = async (req, res) => {
 exports.deleteUser = async (req,res) => {
     try {
         const user = req.params.username;
-        const removeUser = await User.findOneAndDelete({username: user});
+        const filter = req.params.username;
+        const removeUser = await User.findOneAndDelete( {username: filter},{username: user});
         res.status(200).send({ user: removeUser, message: "User deleted"})
     } catch (error) {
         res.status(500).send(error)
