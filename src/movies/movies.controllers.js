@@ -23,6 +23,15 @@ exports.findMovie = async (req, res) => {
     }
 }; 
 
+exports.findAllMovies = async (req, res) => {
+    try {
+        const list = await Movie.find({});
+        res.status(200).send(list);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+};
+
 exports.deleteMovie = async (req,res) => {
     try {
         const movie = req.params.title;
