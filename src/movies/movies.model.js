@@ -22,6 +22,11 @@ const movieSchema = new mongoose.Schema({
         required: true,
         default: 0,
     },
+    inWatchlist: {
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 });
 
 const Movie = mongoose.model("Movie", movieSchema);

@@ -4,9 +4,10 @@ exports.createUser = async (req, res) => {
     try {
         const user = new User(req.body);
         const savedUser = await user.save();
+        const token = await user.generateAuthToken(user._id)
         res
         .status(200)
-        .send({user: savedUser, message: "User created in database"})
+        .send({user: savedUser, token: token, message: "User created in database"})
     } catch (error) {
         res.status(500).send(error)
     }
@@ -16,7 +17,8 @@ exports.findUser = async (req, res) => {
     try {
         const user= req.params.username;
         const targetUser = await User.findOne({username: user});
-        res.status(200).send({ user: targetUser, message: "User found" })
+        const token = await targetUser.generateAuthToken(targetUser._id)
+        res.status(200).send({ user: targetUser, token: token, message: "User found" })
     } catch (error) {
         res.status(500).send(error)
     }
@@ -44,4 +46,8 @@ exports.updateUser = async (req, res) => {
     } catch (error) {
         res.status(500).send(error) 
     }
+};
+
+exports.authUser = async (req,res) => {
+    res.status(200).send(req.user)
 };
