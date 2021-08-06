@@ -47,7 +47,8 @@ exports.updateMovie = async (req, res) => {
        const movie = req.body.title;
        const watched = req.body.watched;
        const rating = req.body.rating;
-       const modifyMovie = await Movie.updateOne({title: movie, watched: watched, rating: rating});
+       const inWatchlist = req.body.inWatchlist
+       const modifyMovie = await Movie.updateOne({title: movie, watched: watched, rating: rating, inWatchlist: inWatchlist});
        res.status(200).send({ movie: modifyMovie, message: "Movie modified"}) 
     } catch (error) {
         res.status(500).send(error) 
