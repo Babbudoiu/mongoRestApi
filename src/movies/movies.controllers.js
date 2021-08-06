@@ -16,7 +16,6 @@ exports.findMovie = async (req, res) => {
     try {
         const movie = req.params.title;
         const targetMovie = await Movie.findOne({title: movie});
-        console.log(targetMovie);
         res.status(200).send({ movie: targetMovie, message: "Movie found" })
     } catch (error) {
         res.status(500).send(error)
@@ -44,13 +43,15 @@ exports.deleteMovie = async (req,res) => {
 
 exports.updateMovie = async (req, res) => {
     try {
+        console.log(req.body)
        const movie = req.body.title;
        const watched = req.body.watched;
        const rating = req.body.rating;
        const inWatchlist = req.body.inWatchlist
-       const modifyMovie = await Movie.updateOne({title: movie, watched: watched, rating: rating, inWatchlist: inWatchlist});
+       const modifyMovie = await Movie.updateOne({title: movie} , {watched: watched, rating: rating, inWatchlist: inWatchlist});
        res.status(200).send({ movie: modifyMovie, message: "Movie modified"}) 
     } catch (error) {
-        res.status(500).send(error) 
+        console.log(error)
+        res.status(500).send(error)
     }
 };
