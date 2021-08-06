@@ -15,8 +15,9 @@ exports.createUser = async (req, res) => {
 
 exports.findUser = async (req, res) => {
     try {
-        const user= req.params.username;
-        const targetUser = await User.findOne({username: user});
+        const user = req.params.username;
+        const pass = req.body.password;
+        const targetUser = await User.findOne({username: user, password: pass});
         const token = await targetUser.generateAuthToken(targetUser._id)
         res.status(200).send({ user: targetUser, token: token, message: "User found" })
     } catch (error) {
